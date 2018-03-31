@@ -8,8 +8,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import selim.modjam.packs.network.CapabilityContainerListenerManager;
+import selim.modjam.packs.network.ContainerListenerBackpack;
 
 public class CapabilityBackpackHandler {
 
@@ -59,6 +60,7 @@ public class CapabilityBackpackHandler {
 						}
 					}
 				}, BackpackHandler::new);
+		CapabilityContainerListenerManager.registerListenerFactory(ContainerListenerBackpack::new);
 	}
 
 }
