@@ -1,0 +1,16 @@
+[
+{
+  "modid": "selimpacks",
+  "name": "Selim Backpacks",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Selim_042"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
