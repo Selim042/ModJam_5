@@ -33,6 +33,7 @@ public class MessageBulkUpdateContainerBackpack
 
 	@Override
 	protected NBTTagCompound readCapabilityData(final ByteBuf buf) {
+//		System.out.println("reading bulk");
 		return MessageUpdateContainerBackpack.readNBTTagCompound(buf);
 	}
 

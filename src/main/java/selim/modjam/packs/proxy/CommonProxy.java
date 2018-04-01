@@ -1,10 +1,23 @@
 package selim.modjam.packs.proxy;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import selim.modjam.packs.ItemBackpack;
 
+@Mod.EventBusSubscriber
 public class CommonProxy {
+
+	@SubscribeEvent
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		event.getRegistry().register(new ItemBackpack());
+	}
+
+	public void registerKeybinds() {}
 
 	public IThreadListener getThreadListener(final MessageContext context) {
 		if (context.side.isServer())

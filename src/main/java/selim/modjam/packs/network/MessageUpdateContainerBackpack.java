@@ -4,8 +4,6 @@ import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import selim.modjam.packs.BackpackHandler;
 import selim.modjam.packs.CapabilityBackpackHandler;
@@ -35,6 +33,7 @@ public class MessageUpdateContainerBackpack
 
 	@Override
 	protected NBTTagCompound readCapabilityData(final ByteBuf buf) {
+//		System.out.println("reading single");
 		return readNBTTagCompound(buf);
 	}
 
