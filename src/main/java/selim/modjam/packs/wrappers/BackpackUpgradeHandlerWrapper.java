@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import selim.modjam.packs.CapabilityBackpackHandler;
-import selim.modjam.packs.IBackpackHandler;
 import selim.modjam.packs.ModJamPacks;
+import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
+import selim.modjam.packs.capabilities.IBackpackHandler;
 
 public class BackpackUpgradeHandlerWrapper implements IInventory {
 
@@ -85,9 +85,7 @@ public class BackpackUpgradeHandlerWrapper implements IInventory {
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {
-		// player.displayGUIChest(this);
-	}
+	public void openInventory(EntityPlayer player) {}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {}

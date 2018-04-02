@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import selim.modjam.packs.CapabilityBackpackHandler;
 import selim.modjam.packs.ModJamPacks;
+import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.wrappers.BackpackHandlerWrapper;
 
 public class MessageOpenBackpack implements IMessage {
@@ -38,4 +38,5 @@ public class MessageOpenBackpack implements IMessage {
 		}
 
 	}
+
 }

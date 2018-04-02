@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import selim.modjam.packs.CapabilityBackpackHandler;
 import selim.modjam.packs.ModJamPacks;
-import selim.modjam.packs.wrappers.BackpackHandlerWrapper;
+import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
+import selim.modjam.packs.wrappers.BackpackUpgradeHandlerWrapper;
 
 public class MessageOpenUpgrades implements IMessage {
 
@@ -33,7 +33,7 @@ public class MessageOpenUpgrades implements IMessage {
 			if (stack.isEmpty()
 					|| !stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
 				return null;
-			player.displayGUIChest(new BackpackHandlerWrapper(stack));
+			player.displayGUIChest(new BackpackUpgradeHandlerWrapper(stack));
 			return null;
 		}
 

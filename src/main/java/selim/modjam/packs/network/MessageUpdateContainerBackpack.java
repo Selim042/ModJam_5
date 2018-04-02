@@ -5,9 +5,9 @@ import javax.annotation.Nullable;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
-import selim.modjam.packs.BackpackHandler;
-import selim.modjam.packs.CapabilityBackpackHandler;
-import selim.modjam.packs.IBackpackHandler;
+import selim.modjam.packs.capabilities.BackpackHandler;
+import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
+import selim.modjam.packs.capabilities.IBackpackHandler;
 
 public class MessageUpdateContainerBackpack
 		extends MessageUpdateContainerCapability<IBackpackHandler, NBTTagCompound> {

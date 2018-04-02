@@ -1,4 +1,4 @@
-package selim.modjam.packs;
+package selim.modjam.packs.capabilities;
 
 import javax.annotation.Nonnull;
 

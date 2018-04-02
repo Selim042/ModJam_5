@@ -1,4 +1,4 @@
-package selim.modjam.packs;
+package selim.modjam.packs.capabilities;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -6,6 +6,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import selim.modjam.packs.ModConfig;
+import selim.modjam.packs.items.IBackpackUpgrade;
 
 public class BackpackHandler extends ItemStackHandler implements IBackpackHandler {
 
@@ -47,7 +49,33 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		this.upgrades.deserializeNBT(upgrades);
 		super.deserializeNBT(nbt);
 	}
+	
 
+	@Override
+	public void setStackInSlot(int slot, ItemStack stack) {
+		super.setStackInSlot(slot, getTrueInsert(stack));
+	}
+
+	@Override
+	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+		return super.insertItem(slot, getTrueInsert(stack), simulate);
+	}
+
+	private ItemStack getTrueInsert(ItemStack stack) {
+		for (int s = 0; s < upgrades.getSlots(); s++) {
+			ItemStack upgrade = upgrades.getStackInSlot(s);
+			if (!(upgrade.getItem() instanceof IBackpackUpgrade))
+				continue;
+			ItemStack toInsert = ((IBackpackUpgrade) upgrade.getItem()).onItemAdd(this, stack);
+			if (upgrade.equals(toInsert))
+				continue;
+			if (toInsert != null)
+				return toInsert;
+		}
+		return stack;
+	}
+
+	// Upgrade methods
 	@Override
 	public void setUpgradeStackInSlot(int slot, ItemStack stack) {
 		this.upgrades.setStackInSlot(slot, stack);

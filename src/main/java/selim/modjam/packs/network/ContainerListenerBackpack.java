@@ -5,8 +5,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import selim.modjam.packs.CapabilityBackpackHandler;
-import selim.modjam.packs.IBackpackHandler;
+import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
+import selim.modjam.packs.capabilities.IBackpackHandler;
 
 public class ContainerListenerBackpack extends CapabilityContainerListener<IBackpackHandler> {
 

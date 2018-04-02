@@ -7,7 +7,9 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import selim.modjam.packs.ItemBackpack;
+import selim.modjam.packs.items.ItemBackpack;
+import selim.modjam.packs.items.ItemCollectionUpgrade;
+import selim.modjam.packs.items.ItemSmeltingUpgrade;
 
 @Mod.EventBusSubscriber
 public class CommonProxy {
@@ -15,6 +17,8 @@ public class CommonProxy {
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		event.getRegistry().register(new ItemBackpack());
+		event.getRegistry().register(new ItemSmeltingUpgrade());
+		event.getRegistry().register(new ItemCollectionUpgrade());
 	}
 
 	public void registerKeybinds() {}

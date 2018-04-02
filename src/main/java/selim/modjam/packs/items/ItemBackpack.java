@@ -1,4 +1,4 @@
-package selim.modjam.packs;
+package selim.modjam.packs.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import selim.modjam.packs.ModJamPacks;
+import selim.modjam.packs.capabilities.BackpackHandler;
 
 public class ItemBackpack extends ItemArmor {
 

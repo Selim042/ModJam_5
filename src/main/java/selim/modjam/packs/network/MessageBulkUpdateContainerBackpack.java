@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidTank;
-import selim.modjam.packs.BackpackHandler;
-import selim.modjam.packs.CapabilityBackpackHandler;
-import selim.modjam.packs.IBackpackHandler;
+import selim.modjam.packs.capabilities.BackpackHandler;
+import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
+import selim.modjam.packs.capabilities.IBackpackHandler;
 
 public class MessageBulkUpdateContainerBackpack
 		extends MessageBulkUpdateContainerCapability<IBackpackHandler, NBTTagCompound> {
