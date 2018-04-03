@@ -18,7 +18,8 @@ public class CommonProxy {
 
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
-		event.getRegistry().register(new ItemBackpack());
+		// TODO: Figure out why this is the only nonworking backpack
+		// event.getRegistry().register(new ItemBackpack());
 		// TODO: Figure out why it isn't working on multiplayer
 		// event.getRegistry().register(new ItemSmeltingUpgrade());
 		event.getRegistry().register(new ItemCollectionUpgrade());
