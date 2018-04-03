@@ -1,16 +1,14 @@
 package selim.modjam.packs.items;
 
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import selim.modjam.packs.ModJamPacks;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.capabilities.IBackpackHandler;
@@ -27,7 +25,8 @@ public class ItemCollectionUpgrade extends Item implements IBackpackUpgrade {
 
 	@SubscribeEvent
 	public static void onPickup(EntityItemPickupEvent event) {
-		ItemStack pickupStack = event.getItem().getItem().copy();
+		ItemStack consumedStack = event.getItem().getItem().copy();
+		ItemStack pickupStack = consumedStack.copy();
 		EntityPlayer player = event.getEntityPlayer();
 		if (player == null)
 			return;
@@ -39,17 +38,13 @@ public class ItemCollectionUpgrade extends Item implements IBackpackUpgrade {
 				.getCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null);
 		for (int s = 0; s < backpack.getUpgradeSlots(); s++) {
 			if (backpack.getUpgradeStackInSlot(s).getItem() instanceof ItemCollectionUpgrade) {
-				for (int i = 0; !stack.isEmpty() && i < backpack.getSlots(); i++)
-					stack = backpack.insertItem(i, stack, false);
-				if (!stack.isEmpty()) {
-					if (areStacksSimilar(pickupStack, stack, 0)) 
+				for (int i = 0; !consumedStack.isEmpty() && i < backpack.getSlots(); i++)
+					consumedStack = backpack.insertItem(i, consumedStack, false);
+				if (!consumedStack.isEmpty()) {
+					if (areStacksSimilar(pickupStack, consumedStack, 0))
 						return;
 					event.setResult(Result.ALLOW);
-					World world = player.world;
-					EntityItem oldItem = event.getItem();
-					world.spawnEntity(
-							new EntityItem(world, oldItem.posX, oldItem.posY, oldItem.posZ, stack));
-					event.getItem().setDead();
+					event.getItem().setItem(consumedStack);
 					// player.sendMessage(new TextComponentString("test"));
 					// event.getItem().getItem().setCount(stack.getCount());
 				} else {
