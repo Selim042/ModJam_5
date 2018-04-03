@@ -7,15 +7,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import selim.modjam.packs.ModConfig;
+import selim.modjam.packs.ModJamPacks;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
 
-public class BackpackHandler extends ItemStackHandler implements IBackpackHandler {
+public class BackpackHandler extends ItemStackHandler
+		implements IBackpackHandler, ICapabilitySerializable<NBTTagCompound> {
 
+	private ItemStack backpack;
 	private final ItemStackHandler contents;
 	private final ItemStackHandler upgrades = new ItemStackHandler(9);
 	private final List<ItemStackHandler> sizeUpgrades = new LinkedList<ItemStackHandler>();
@@ -27,6 +31,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 
 	public BackpackHandler(ItemStack chestplate) {
 		this(ModConfig.getSize(chestplate));
+		this.backpack = chestplate;
 	}
 
 	private BackpackHandler(int size) {
@@ -35,12 +40,24 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return capability.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-				|| capability.equals(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY);
+		boolean hasCap = false;
+		if (this.backpack == null)
+			hasCap = true;
+		else {
+			NBTTagCompound nbt = this.backpack.getTagCompound();
+			if (nbt != null)
+				hasCap = nbt.getBoolean(ModJamPacks.MODID + ":backpack");
+		}
+		if (hasCap)
+			return capability.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+					|| capability.equals(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY);
+		return false;
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (!hasCapability(capability, facing))
+			return null;
 		if (capability.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY))
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(contents);
 		if (capability.equals(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY))

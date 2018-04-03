@@ -17,7 +17,12 @@ public class ItemBackpack extends ItemArmor {
 		this.setRegistryName(new ResourceLocation(ModJamPacks.MODID, "backpack"));
 		this.setUnlocalizedName(ModJamPacks.MODID + ":backpack");
 		this.setMaxStackSize(1);
-		this.setCreativeTab(CreativeTabs.COMBAT);
+		this.setCreativeTab(ModJamPacks.CREATIVE_TAB);
+	}
+
+	@Override
+	public CreativeTabs[] getCreativeTabs() {
+		return new CreativeTabs[] { CreativeTabs.COMBAT, this.getCreativeTab() };
 	}
 
 	@Override

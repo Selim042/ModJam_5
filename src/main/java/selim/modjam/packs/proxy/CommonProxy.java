@@ -34,12 +34,11 @@ public class CommonProxy {
 	}
 
 	public EntityPlayer getPlayer(final MessageContext context) {
-		if (context.side.isServer()) {
+		if (context.side.isServer())
 			return context.getServerHandler().player;
-		} else {
+		else
 			throw new IllegalArgumentException(
 					"Tried to get the player from a client-side MessageContext on the dedicated server");
-		}
 	}
 
 }

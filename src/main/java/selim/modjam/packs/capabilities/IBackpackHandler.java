@@ -3,12 +3,9 @@ package selim.modjam.packs.capabilities;
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public interface IBackpackHandler
-		extends IItemHandlerModifiable, ICapabilitySerializable<NBTTagCompound> {
+public interface IBackpackHandler extends IItemHandlerModifiable {
 
 	void setUpgradeStackInSlot(int slot, @Nonnull ItemStack stack);
 

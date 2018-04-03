@@ -10,6 +10,7 @@ import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Config(modid = ModJamPacks.MODID)
 @Config.LangKey(ModJamPacks.MODID + ":config.title")
@@ -49,7 +50,7 @@ public class ModConfig {
 		return size;
 	}
 
-	@Mod.EventBusSubscriber(modid = ModJamPacks.MODID)
+	@Mod.EventBusSubscriber(modid = ModJamPacks.MODID, value = Side.CLIENT)
 	private static class EventHandler {
 
 		/**
@@ -65,4 +66,5 @@ public class ModConfig {
 				ConfigManager.sync(ModJamPacks.MODID, Config.Type.INSTANCE);
 		}
 	}
+
 }
