@@ -15,14 +15,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import selim.modjam.packs.ModConfig;
 import selim.modjam.packs.ModJamPacks;
 import selim.modjam.packs.PacksItems;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
@@ -30,7 +31,7 @@ import selim.modjam.packs.network.MessageOpenBackpack;
 import selim.modjam.packs.network.MessageOpenUpgrades;
 
 @SideOnly(Side.CLIENT)
-@Mod.EventBusSubscriber(Side.CLIENT)
+// @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
 	public static final KeyBinding openBackpack = new KeyBinding(
@@ -44,6 +45,13 @@ public class ClientProxy extends CommonProxy {
 	public void registerKeybinds() {
 		ClientRegistry.registerKeyBinding(openBackpack);
 		ClientRegistry.registerKeyBinding(openUpgrades);
+	}
+
+	@Override
+	public void registerEventListeners() {
+		super.registerEventListeners();
+		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(ModConfig.EventHandler.class);
 	}
 
 	@SideOnly(Side.CLIENT)

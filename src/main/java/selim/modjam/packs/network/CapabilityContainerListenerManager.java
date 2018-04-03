@@ -41,9 +41,9 @@ public class CapabilityContainerListenerManager {
 		containerListenerFactories.add(factory);
 	}
 
-	@Mod.EventBusSubscriber
-	@SuppressWarnings("unused")
-	private static class EventHandler {
+//	@Mod.EventBusSubscriber
+//	@SuppressWarnings("unused")
+	public static class EventHandler {
 
 		/**
 		 * Add the listeners to a {@link Container}.

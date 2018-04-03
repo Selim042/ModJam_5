@@ -50,8 +50,8 @@ public class ModConfig {
 		return size;
 	}
 
-	@Mod.EventBusSubscriber(modid = ModJamPacks.MODID, value = Side.CLIENT)
-	private static class EventHandler {
+//	@Mod.EventBusSubscriber(modid = ModJamPacks.MODID, value = Side.CLIENT)
+	public static class EventHandler {
 
 		/**
 		 * Inject the new values and save to the config file when the config has

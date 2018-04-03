@@ -13,7 +13,7 @@ import selim.modjam.packs.ModJamPacks;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.capabilities.IBackpackHandler;
 
-@Mod.EventBusSubscriber
+//@Mod.EventBusSubscriber
 public class ItemCollectionUpgrade extends Item implements IBackpackUpgrade {
 
 	public ItemCollectionUpgrade() {

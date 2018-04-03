@@ -70,6 +70,7 @@ public class ModJamPacks {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
+		proxy.registerEventListeners();
 
 		// Add all backpacks
 		NBTTagCompound innerNbt = new NBTTagCompound();
