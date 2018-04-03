@@ -24,9 +24,9 @@ public class ModConfig {
 	public static final Map<String, Integer> PACK_SIZES = new HashMap<>();
 
 	static {
-		PACK_SIZES.put(ModJamPacks.MODID + ":backpack", 18);
+//		PACK_SIZES.put(ModJamPacks.MODID + ":backpack", 18);
 		PACK_SIZES.put("minecraft:leather_chesplate", 27);
-		PACK_SIZES.put("minecraft:chain_chesplate", 0);
+		PACK_SIZES.put("minecraft:chain_chesplate", 18);
 		PACK_SIZES.put("minecraft:iron_chesplate", 9);
 		PACK_SIZES.put("minecraft:gold_chesplate", 18);
 		PACK_SIZES.put("minecraft:diamond_chesplate", 36);
