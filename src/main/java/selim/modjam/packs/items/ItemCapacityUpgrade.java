@@ -27,6 +27,10 @@ public class ItemCapacityUpgrade extends Item implements IBackpackUpgrade {
 
 	private static class CapacityUpgradeProvider extends ItemStackHandler
 			implements ICapabilityProvider {
+	
+		public CapacityUpgradeProvider() {
+			super(9);
+		}
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {

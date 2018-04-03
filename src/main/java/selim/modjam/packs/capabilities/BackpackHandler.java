@@ -164,9 +164,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		this.sizeUpgrades.clear();
 		for (int s = 0; s < this.upgrades.getSlots(); s++) {
 			ItemStack stack = this.upgrades.getStackInSlot(s);
-			System.out.println("checking: " + stack);
 			if (stack.getItem() instanceof ItemCapacityUpgrade) {
-				System.out.println("found");
 				IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 						null);
 				if (handler instanceof ItemStackHandler)
