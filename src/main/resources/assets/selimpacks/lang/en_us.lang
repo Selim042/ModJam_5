@@ -9,5 +9,7 @@ key.selimpacks:open_backpack=Open Backpack
 key.selimpacks:open_upgrades=Open Upgrades
 
 misc.selimpacks:backpack_tooltip=Equiped with Backpack
+misc.selimpacks:backpack_inv=Backpack
+misc.selimpacks:backpack_inv=Upgrades
 
 itemGroup.selimpacks=Selim's Backpacks

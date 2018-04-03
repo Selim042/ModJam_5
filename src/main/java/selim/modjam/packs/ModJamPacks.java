@@ -120,6 +120,9 @@ public class ModJamPacks {
 	// player.displayGUIChest(new BackpackHandlerWrapper(stack));
 	// }
 
+	// TODO: quadraxis - Today at 11:25 PM
+	// also use a client-side event handler, don't just stick @SideOnly on the
+	// method
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {

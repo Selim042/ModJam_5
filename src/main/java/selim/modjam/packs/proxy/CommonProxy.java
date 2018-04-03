@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import selim.modjam.packs.items.ItemBackpack;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
 import selim.modjam.packs.items.ItemCollectionUpgrade;
-import selim.modjam.packs.items.ItemSmeltingUpgrade;
 import selim.modjam.packs.network.CapabilityContainerListenerManager;
 
 @Mod.EventBusSubscriber
@@ -20,7 +19,8 @@ public class CommonProxy {
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		event.getRegistry().register(new ItemBackpack());
-		event.getRegistry().register(new ItemSmeltingUpgrade());
+		// TODO: Figure out why it isn't working on multiplayer
+		// event.getRegistry().register(new ItemSmeltingUpgrade());
 		event.getRegistry().register(new ItemCollectionUpgrade());
 		event.getRegistry().register(new ItemCapacityUpgrade());
 	}
@@ -28,7 +28,7 @@ public class CommonProxy {
 	public void registerKeybinds() {}
 
 	public void registerEventListeners() {
-//		MinecraftForge.EVENT_BUS.register(this);
+		// MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(ItemCollectionUpgrade.class);
 		MinecraftForge.EVENT_BUS.register(CapabilityContainerListenerManager.class);
 	}
