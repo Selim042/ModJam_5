@@ -1,0 +1,23 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		" s ",
+		"cfc",
+		" s "
+	],
+	"key": {
+		"c": {
+			"item": "minecraft:coal"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		},
+		"f": {
+			"item": "minecraft:furnace"
+		}
+	},
+	"result": {
+		"item": "selimpacks:smelting_upgrade"
+	}
+}

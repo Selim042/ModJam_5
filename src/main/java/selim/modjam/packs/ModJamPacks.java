@@ -54,6 +54,9 @@ public class ModJamPacks {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(this);
+		proxy.registerEventListeners();
+
 		CapabilityBackpackHandler.register();
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 		network.registerMessage(MessageBulkUpdateContainerBackpack.Handler.class,
@@ -69,8 +72,6 @@ public class ModJamPacks {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(this);
-		proxy.registerEventListeners();
 
 		// Add all backpacks
 		NBTTagCompound innerNbt = new NBTTagCompound();

@@ -17,6 +17,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
@@ -31,7 +32,7 @@ import selim.modjam.packs.network.MessageOpenBackpack;
 import selim.modjam.packs.network.MessageOpenUpgrades;
 
 @SideOnly(Side.CLIENT)
-// @Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
 
 	public static final KeyBinding openBackpack = new KeyBinding(
@@ -50,7 +51,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerEventListeners() {
 		super.registerEventListeners();
-		MinecraftForge.EVENT_BUS.register(this);
+		// MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(ModConfig.EventHandler.class);
 	}
 

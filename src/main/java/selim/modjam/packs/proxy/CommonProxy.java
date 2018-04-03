@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IThreadListener;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import selim.modjam.packs.items.ItemBackpack;
@@ -13,7 +14,7 @@ import selim.modjam.packs.items.ItemCollectionUpgrade;
 import selim.modjam.packs.items.ItemSmeltingUpgrade;
 import selim.modjam.packs.network.CapabilityContainerListenerManager;
 
-//@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber
 public class CommonProxy {
 
 	@SubscribeEvent
@@ -27,7 +28,7 @@ public class CommonProxy {
 	public void registerKeybinds() {}
 
 	public void registerEventListeners() {
-		MinecraftForge.EVENT_BUS.register(this);
+//		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(ItemCollectionUpgrade.class);
 		MinecraftForge.EVENT_BUS.register(CapabilityContainerListenerManager.class);
 	}

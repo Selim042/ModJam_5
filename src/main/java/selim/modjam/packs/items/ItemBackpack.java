@@ -21,6 +21,11 @@ public class ItemBackpack extends ItemArmor {
 	}
 
 	@Override
+	public int getColor(ItemStack stack) {
+		return 0xFFFFFF;
+	}
+
+	@Override
 	public CreativeTabs[] getCreativeTabs() {
 		return new CreativeTabs[] { CreativeTabs.COMBAT, this.getCreativeTab() };
 	}

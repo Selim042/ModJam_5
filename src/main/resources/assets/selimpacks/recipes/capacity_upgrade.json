@@ -1,0 +1,25 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		" s ",
+		"lcl",
+		" s "
+	],
+	"key": {
+		"l": {
+			"type": "forge:ore_dict",
+			"ore": "leather"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		},
+		"c": {
+			"type": "forge:ore_dict",
+			"ore": "chestWood"
+		}
+	},
+	"result": {
+		"item": "selimpacks:capacity_upgrade"
+	}
+}

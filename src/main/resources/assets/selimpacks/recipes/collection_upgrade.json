@@ -1,0 +1,20 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		" s ",
+		"shs",
+		" s "
+	],
+	"key": {
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		},
+		"h": {
+			"item": "minecraft:hopper"
+		}
+	},
+	"result": {
+		"item": "selimpacks:collection_upgrade"
+	}
+}
