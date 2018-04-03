@@ -1,0 +1,13 @@
+
+item.selimpacks:backpack.name=Backpack
+item.selimpacks:smelting_upgrade.name=Smelting Backpack Upgrade
+item.selimpacks:collection_upgrade.name=Collection Backpack Upgrade
+item.selimpacks:capacity_upgrade.name=Capacity Backpack Upgrade
+
+key.selimpacks.category=Selim's Backpacks
+key.selimpacks:open_backpack=Open Backpack
+key.selimpacks:open_upgrades=Open Upgrades
+
+misc.selimpacks:backpack_tooltip=Equiped with Backpack
+
+itemGroup.selimpacks=Selim's Backpacks

@@ -1,0 +1,21 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"l l",
+		"lcl",
+		"l l"
+	],
+	"key": {
+		"l": {
+			"type": "forge:ore_dict",
+			"ore": "leather"
+		},
+		"c": {
+			"type": "forge:ore_dict",
+			"ore": "chestWood"
+		}
+	},
+	"result": {
+		"item": "selimpacks:backpack"
+	}
+}
