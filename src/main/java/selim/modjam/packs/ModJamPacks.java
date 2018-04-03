@@ -27,6 +27,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import selim.modjam.packs.capabilities.BackpackHandler;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.capabilities.IBackpackHandler;
@@ -119,12 +120,13 @@ public class ModJamPacks {
 	// player.displayGUIChest(new BackpackHandlerWrapper(stack));
 	// }
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
-//		List<String> nbtList = new ArrayList<String>();
-//		NBTUtils.nbtToStringList(nbtList, stack.getTagCompound());
-//		event.getToolTip().addAll(nbtList);
+		// List<String> nbtList = new ArrayList<String>();
+		// NBTUtils.nbtToStringList(nbtList, stack.getTagCompound());
+		// event.getToolTip().addAll(nbtList);
 		if (stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)
 				|| (stack.getTagCompound() != null
 						&& stack.getTagCompound().getBoolean(MODID + ":backpack"))) {
@@ -132,8 +134,10 @@ public class ModJamPacks {
 					.getCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null);
 			event.getToolTip().add(I18n.format("misc." + MODID + ":backpack_tooltip"));
 		}
-//		if (stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
-//			event.getToolTip().add("has cap");
+		// if
+		// (stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY,
+		// null))
+		// event.getToolTip().add("has cap");
 	}
 
 }
