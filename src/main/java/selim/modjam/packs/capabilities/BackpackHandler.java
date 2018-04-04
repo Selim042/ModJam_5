@@ -14,7 +14,9 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import selim.modjam.packs.ModConfig;
 import selim.modjam.packs.ModJamPacks;
+import selim.modjam.packs.items.IBackpackUpgrade;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
+import selim.modjam.packs.items.ItemEnderUpgrade;
 
 public class BackpackHandler extends ItemStackHandler
 		implements IBackpackHandler, ICapabilitySerializable<NBTTagCompound> {
@@ -23,6 +25,7 @@ public class BackpackHandler extends ItemStackHandler
 	private final ItemStackHandler contents;
 	private final ItemStackHandler upgrades = new ItemStackHandler(9);
 	private final List<ItemStackHandler> sizeUpgrades = new LinkedList<ItemStackHandler>();
+	private ItemStack enderUpgrade;
 	private CombinedInvWrapper wrapper;
 
 	protected BackpackHandler() {
@@ -36,6 +39,7 @@ public class BackpackHandler extends ItemStackHandler
 
 	private BackpackHandler(int size) {
 		this.contents = new ItemStackHandler(size);
+		this.initUpgrades();
 	}
 
 	@Override
@@ -124,6 +128,17 @@ public class BackpackHandler extends ItemStackHandler
 		return wrapper.getSlotLimit(slot);
 	}
 
+	@Override
+	public void setEnderUpgrade(ItemStack enderUpgrade) {
+		if (enderUpgrade != null && enderUpgrade.getItem() instanceof ItemEnderUpgrade)
+			this.enderUpgrade = enderUpgrade;
+	}
+
+	@Override
+	public ItemStack getEnderUpgrade() {
+		return this.enderUpgrade;
+	}
+
 	// Internal inv
 	public int getInternalSlots() {
 		return contents.getSlots();
@@ -144,7 +159,12 @@ public class BackpackHandler extends ItemStackHandler
 	// Upgrade methods
 	@Override
 	public void setUpgradeStackInSlot(int slot, ItemStack stack) {
+		ItemStack prevStack = getUpgradeStackInSlot(slot);
+		if (prevStack.getItem() instanceof IBackpackUpgrade)
+			((IBackpackUpgrade) prevStack.getItem()).onUpgradeRemoved(this, prevStack);
 		this.upgrades.setStackInSlot(slot, stack);
+		if (stack.getItem() instanceof IBackpackUpgrade)
+			((IBackpackUpgrade) stack.getItem()).onUpgradeAdded(this, stack);
 		this.updateSizeUpgrades();
 	}
 
@@ -168,6 +188,8 @@ public class BackpackHandler extends ItemStackHandler
 	@Override
 	public ItemStack extractUpgradeItem(int slot, int amount, boolean simulate) {
 		ItemStack toReturn = this.upgrades.extractItem(slot, amount, simulate);
+		if (toReturn.getItem() instanceof IBackpackUpgrade)
+			((IBackpackUpgrade) toReturn.getItem()).onUpgradeRemoved(this, toReturn);
 		this.updateSizeUpgrades();
 		return toReturn;
 	}
@@ -175,6 +197,19 @@ public class BackpackHandler extends ItemStackHandler
 	@Override
 	public int getUpgradeSlotLimit(int slot) {
 		return this.upgrades.getSlotLimit(slot);
+	}
+
+	private boolean init = false;
+
+	private void initUpgrades() {
+		if (init)
+			return;
+		init = true;
+		for (int s = 0; s < this.upgrades.getSlots(); s++) {
+			ItemStack stack = this.upgrades.getStackInSlot(s);
+			if (stack.getItem() instanceof IBackpackUpgrade)
+				((IBackpackUpgrade)stack.getItem()).onUpgradeAdded(this, stack);
+		}
 	}
 
 	private void updateSizeUpgrades() {

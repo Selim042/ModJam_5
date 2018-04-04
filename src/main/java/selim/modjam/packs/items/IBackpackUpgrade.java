@@ -22,4 +22,25 @@ public interface IBackpackUpgrade {
 		return added;
 	}
 
+	/**
+	 * Called when this upgrade is added to a backpack, or when the backpack is
+	 * loaded.
+	 * 
+	 * @param backpack
+	 *            The ItemStack being used as a backpack
+	 * @param added
+	 *            The ItemStack to be added to the backpack
+	 */
+	public default void onUpgradeAdded(IBackpackHandler backpack, ItemStack added) {}
+
+	/**
+	 * Called when this upgrade is removed to a backpack.
+	 * 
+	 * @param backpack
+	 *            The ItemStack being used as a backpack
+	 * @param added
+	 *            The ItemStack to be removed to the backpack
+	 */
+	public default void onUpgradeRemoved(IBackpackHandler backpack, ItemStack added) {}
+
 }

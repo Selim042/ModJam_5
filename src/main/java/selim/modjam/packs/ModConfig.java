@@ -8,9 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
 @Config(modid = ModJamPacks.MODID)
 @Config.LangKey(ModJamPacks.MODID + ":config.title")
@@ -24,7 +22,7 @@ public class ModConfig {
 	public static final Map<String, Integer> PACK_SIZES = new HashMap<>();
 
 	static {
-//		PACK_SIZES.put(ModJamPacks.MODID + ":backpack", 18);
+		// PACK_SIZES.put(ModJamPacks.MODID + ":backpack", 18);
 		PACK_SIZES.put("minecraft:leather_chesplate", 27);
 		PACK_SIZES.put("minecraft:chain_chesplate", 18);
 		PACK_SIZES.put("minecraft:iron_chesplate", 9);
@@ -52,7 +50,7 @@ public class ModConfig {
 		return size;
 	}
 
-//	@Mod.EventBusSubscriber(modid = ModJamPacks.MODID, value = Side.CLIENT)
+	// @Mod.EventBusSubscriber(modid = ModJamPacks.MODID, value = Side.CLIENT)
 	public static class EventHandler {
 
 		/**

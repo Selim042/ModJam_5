@@ -1,9 +1,9 @@
 package selim.modjam.packs;
 
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
-import selim.modjam.packs.items.ItemBackpack;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
 import selim.modjam.packs.items.ItemCollectionUpgrade;
+import selim.modjam.packs.items.ItemEnderUpgrade;
 
 @ObjectHolder(ModJamPacks.MODID)
 public class PacksItems {
@@ -12,5 +12,6 @@ public class PacksItems {
 	// public static final ItemSmeltingUpgrade SMELTING_UPGRADE = null;
 	public static final ItemCollectionUpgrade COLLECTION_UPGRADE = null;
 	public static final ItemCapacityUpgrade CAPACITY_UPGRADE = null;
+	public static final ItemEnderUpgrade ENDER_UPGRADE = null;
 
 }

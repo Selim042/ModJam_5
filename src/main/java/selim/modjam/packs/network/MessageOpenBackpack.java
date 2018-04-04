@@ -33,7 +33,7 @@ public class MessageOpenBackpack implements IMessage {
 			if (stack.isEmpty()
 					|| !stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
 				return null;
-			player.displayGUIChest(new BackpackHandlerWrapper(stack));
+			player.displayGUIChest(new BackpackHandlerWrapper(player, stack));
 			return null;
 		}
 

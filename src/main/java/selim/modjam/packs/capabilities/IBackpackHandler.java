@@ -22,4 +22,8 @@ public interface IBackpackHandler extends IItemHandlerModifiable {
 
 	int getUpgradeSlotLimit(int slot);
 
+	void setEnderUpgrade(ItemStack enderUpgrade);
+
+	ItemStack getEnderUpgrade();
+
 }

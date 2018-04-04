@@ -8,9 +8,9 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import selim.modjam.packs.items.ItemBackpack;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
 import selim.modjam.packs.items.ItemCollectionUpgrade;
+import selim.modjam.packs.items.ItemEnderUpgrade;
 import selim.modjam.packs.network.CapabilityContainerListenerManager;
 
 @Mod.EventBusSubscriber
@@ -24,6 +24,7 @@ public class CommonProxy {
 		// event.getRegistry().register(new ItemSmeltingUpgrade());
 		event.getRegistry().register(new ItemCollectionUpgrade());
 		event.getRegistry().register(new ItemCapacityUpgrade());
+		event.getRegistry().register(new ItemEnderUpgrade());
 	}
 
 	public void registerKeybinds() {}
@@ -49,5 +50,11 @@ public class CommonProxy {
 			throw new IllegalArgumentException(
 					"Tried to get the player from a client-side MessageContext on the dedicated server");
 	}
+
+	public void preInit() {}
+
+	public void init() {}
+
+	public void postInit() {}
 
 }

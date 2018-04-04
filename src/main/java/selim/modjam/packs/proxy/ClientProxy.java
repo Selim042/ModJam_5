@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -13,6 +14,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IThreadListener;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +30,7 @@ import selim.modjam.packs.ModConfig;
 import selim.modjam.packs.ModJamPacks;
 import selim.modjam.packs.PacksItems;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
+import selim.modjam.packs.items.ItemEnderUpgrade;
 import selim.modjam.packs.network.MessageOpenBackpack;
 import selim.modjam.packs.network.MessageOpenUpgrades;
 
@@ -101,7 +104,7 @@ public class ClientProxy extends CommonProxy {
 				Object obj = f.get(null);
 				if (obj == null || obj == Items.AIR)
 					continue;
-				if (obj instanceof Item) {
+				if (obj instanceof Item && !(obj instanceof ItemEnderUpgrade)) {
 					registerModel((Item) obj);
 				} else
 					System.out.println("Failed to register: " + f.getName());
@@ -111,6 +114,16 @@ public class ClientProxy extends CommonProxy {
 					"An " + e.getClass().getName() + " was thrown when attempting to load Item models.");
 			e.printStackTrace();
 		}
+
+		ModelLoader.setCustomMeshDefinition(PacksItems.ENDER_UPGRADE,
+				new ItemEnderUpgrade.EnderMeshDefinition());
+		ModelLoader.registerItemVariants(PacksItems.ENDER_UPGRADE,
+				new ModelResourceLocation(
+						new ResourceLocation(ModJamPacks.MODID, "ender_upgrade_unowned"), "inventory"),
+				new ModelResourceLocation(new ResourceLocation(ModJamPacks.MODID, "ender_upgrade_owned"),
+						"inventory"),
+				new ModelResourceLocation(new ResourceLocation(ModJamPacks.MODID, "ender_upgrade"),
+						"inventory"));
 	}
 
 	private static void registerModel(Item item) {
@@ -119,5 +132,18 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomModelResourceLocation(item, 0,
 				new ModelResourceLocation(item.getRegistryName(), "inventory"));
 	}
+
+	@Override
+	public void preInit() {}
+
+	@Override
+	public void init() {
+		ItemColors colors = Minecraft.getMinecraft().getItemColors();
+		colors.registerItemColorHandler(new ItemEnderUpgrade.EnderUpgradeItemColor(),
+				PacksItems.ENDER_UPGRADE);
+	}
+
+	@Override
+	public void postInit() {}
 
 }

@@ -31,6 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import selim.modjam.packs.capabilities.BackpackHandler;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.capabilities.IBackpackHandler;
+import selim.modjam.packs.compat.EnderStorageHelper;
 import selim.modjam.packs.items.ItemBackpack;
 import selim.modjam.packs.network.MessageBulkUpdateContainerBackpack;
 import selim.modjam.packs.network.MessageOpenBackpack;
@@ -38,7 +39,8 @@ import selim.modjam.packs.network.MessageOpenUpgrades;
 import selim.modjam.packs.network.MessageUpdateContainerBackpack;
 import selim.modjam.packs.proxy.CommonProxy;
 
-@Mod(modid = ModJamPacks.MODID, name = ModJamPacks.NAME, version = ModJamPacks.VERSION)
+@Mod(modid = ModJamPacks.MODID, name = ModJamPacks.NAME, version = ModJamPacks.VERSION,
+		dependencies = "after:" + EnderStorageHelper.ID)
 public class ModJamPacks {
 
 	public static final String MODID = "selimpacks";
@@ -69,6 +71,8 @@ public class ModJamPacks {
 		network.registerMessage(MessageOpenUpgrades.Handler.class, MessageOpenUpgrades.class, packetId++,
 				Side.SERVER);
 		proxy.registerKeybinds();
+
+		proxy.preInit();
 	}
 
 	@EventHandler
@@ -87,17 +91,21 @@ public class ModJamPacks {
 			nbt.setByte("Count", (byte) 1);
 			nbt.setTag("tag", innerNbt);
 			ItemStack stack = new ItemStack(nbt);
-			// TODO: Make this JSON compatible
+			// TODO: Make this recipe JSON compatible
 			GameRegistry.addShapelessRecipe(
 					new ResourceLocation(MODID, item.getRegistryName().getResourcePath() + "_backpack"),
 					new ResourceLocation(MODID, "backpack"), stack, Ingredient.fromItem(item),
 					CraftingHelper.getIngredient("chestWood"));
 			BackpackTab.addBackpack(stack);
 		}
+
+		proxy.init();
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {}
+	public void postInit(FMLPostInitializationEvent event) {
+		proxy.postInit();
+	}
 
 	@SubscribeEvent
 	public void stackCapAttach(AttachCapabilitiesEvent<ItemStack> event) {

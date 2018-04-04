@@ -1,0 +1,9 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "selimpacks:items/ender_upgrade_unowned",
+        "layer1": "selimpacks:items/ender_upgrade_left",
+        "layer2": "selimpacks:items/ender_upgrade_middle",
+        "layer3": "selimpacks:items/ender_upgrade_right"
+    }
+}
