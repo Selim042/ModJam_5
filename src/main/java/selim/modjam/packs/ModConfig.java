@@ -41,6 +41,8 @@ public class ModConfig {
 	public static int getSize(Item item) {
 		if (DEFAULT_SIZE % 9 != 0)
 			DEFAULT_SIZE = 18;
+		if (item == null)
+			return DEFAULT_SIZE;
 		String id = item.getRegistryName().toString();
 		if (!PACK_SIZES.containsKey(id))
 			return DEFAULT_SIZE;
