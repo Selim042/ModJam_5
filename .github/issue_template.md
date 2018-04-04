@@ -1,3 +1,5 @@
+<!--- Please use this template when making issues.-->
+<!--- Anything in these pointed bracket things won't be shown in the report.-->
 Your issue may already be reported!
 Please search on the [issue track](../) before creating one.
 
@@ -30,6 +32,7 @@ Please search on the [issue track](../) before creating one.
 * Forge version:
 * Optifine?:
 * Minecraft version:
+* Related mov versions (if applicable):
 
 ## Crashlog
 <!--- If you are reporting a crash, please include a link to your crashlog either from -->
