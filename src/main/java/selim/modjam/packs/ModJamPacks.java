@@ -45,7 +45,7 @@ public class ModJamPacks {
 
 	public static final String MODID = "selimpacks";
 	public static final String NAME = "Selim Backpacks";
-	public static final String VERSION = "1.0";
+	public static final String VERSION = "1.1.0";
 	public static final ResourceLocation CAPABILITY_ID = new ResourceLocation(MODID, "backpack");
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static SimpleNetworkWrapper network;
