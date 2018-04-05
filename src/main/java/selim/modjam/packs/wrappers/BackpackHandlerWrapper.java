@@ -44,74 +44,74 @@ public class BackpackHandlerWrapper implements IInventory {
 
 	@Override
 	public int getSizeInventory() {
-		ItemStack upgrade = handler.getEnderUpgrade();
-		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-					.getEnderInventory(player, upgrade);
-			return handler.getSlots();
-		} else
+//		ItemStack upgrade = handler.getEnderUpgrade();
+//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
+//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
+//					.getEnderInventory(player, upgrade);
+//			return handler.getSlots();
+//		} else
 			return handler.getSlots();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		ItemStack upgrade = handler.getEnderUpgrade();
-		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-					.getEnderInventory(player, upgrade);
+//		ItemStack upgrade = handler.getEnderUpgrade();
+//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
+//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
+//					.getEnderInventory(player, upgrade);
+//			for (int s = 0; s < handler.getSlots(); s++)
+//				if (!handler.getStackInSlot(s).isEmpty())
+//					return false;
+//			return true;
+//		} else {
 			for (int s = 0; s < handler.getSlots(); s++)
 				if (!handler.getStackInSlot(s).isEmpty())
 					return false;
 			return true;
-		} else {
-			for (int s = 0; s < handler.getSlots(); s++)
-				if (!handler.getStackInSlot(s).isEmpty())
-					return false;
-			return true;
-		}
+//		}
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		ItemStack upgrade = handler.getEnderUpgrade();
-		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-					.getEnderInventory(player, upgrade);
-			return handler.getStackInSlot(index);
-		} else
+//		ItemStack upgrade = handler.getEnderUpgrade();
+//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
+//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
+//					.getEnderInventory(player, upgrade);
+//			return handler.getStackInSlot(index);
+//		} else
 			return handler.getStackInSlot(index);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		ItemStack upgrade = handler.getEnderUpgrade();
-		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-					.getEnderInventory(player, upgrade);
-			return handler.extractItem(index, count, false);
-		} else
+//		ItemStack upgrade = handler.getEnderUpgrade();
+//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
+//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
+//					.getEnderInventory(player, upgrade);
+//			return handler.extractItem(index, count, false);
+//		} else
 			return handler.extractItem(index, count, false);
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		ItemStack upgrade = handler.getEnderUpgrade();
-		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-					.getEnderInventory(player, upgrade);
-			return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
-		} else
+//		ItemStack upgrade = handler.getEnderUpgrade();
+//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
+//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
+//					.getEnderInventory(player, upgrade);
+//			return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+//		} else
 			return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		ItemStack upgrade = handler.getEnderUpgrade();
-		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-					.getEnderInventory(player, upgrade);
-			handler.setStackInSlot(index, stack);
-		} else
+//		ItemStack upgrade = handler.getEnderUpgrade();
+//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
+//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
+//					.getEnderInventory(player, upgrade);
+//			handler.setStackInSlot(index, stack);
+//		} else
 			handler.setStackInSlot(index, stack);
 	}
 
@@ -159,4 +159,5 @@ public class BackpackHandlerWrapper implements IInventory {
 		for (int s = 0; s < handler.getSlots(); s++)
 			handler.setStackInSlot(s, ItemStack.EMPTY);
 	}
+
 }

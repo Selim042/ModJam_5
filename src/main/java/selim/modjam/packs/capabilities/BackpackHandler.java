@@ -3,6 +3,7 @@ package selim.modjam.packs.capabilities;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -10,6 +11,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import selim.modjam.packs.ModConfig;
@@ -84,49 +86,122 @@ public class BackpackHandler extends ItemStackHandler
 	}
 
 	@Override
-	public void setSize(int size) {}
+	public void setSize(int size) {
+		this.setSize(null, size);
+	}
 
 	@Override
 	public void setStackInSlot(int slot, ItemStack stack) {
-		if (this.wrapper == null)
-			this.updateSizeUpgrades();
-		wrapper.setStackInSlot(slot, getTrueInsert(stack));
+		this.setStackInSlot(null, slot, stack);
 	}
 
 	@Override
 	public int getSlots() {
-		if (this.wrapper == null)
-			this.updateSizeUpgrades();
-		return wrapper.getSlots();
+		return this.getSlots(null);
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		if (this.wrapper == null)
-			this.updateSizeUpgrades();
-		return wrapper.getStackInSlot(slot);
+		return this.getStackInSlot(null, slot);
 	}
 
 	@Override
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-		if (this.wrapper == null)
-			this.updateSizeUpgrades();
-		return wrapper.insertItem(slot, getTrueInsert(stack), simulate);
+		return this.insertItem(null, slot, stack, simulate);
 	}
 
 	@Override
 	public ItemStack extractItem(int slot, int amount, boolean simulate) {
-		if (this.wrapper == null)
-			this.updateSizeUpgrades();
-		return wrapper.extractItem(slot, amount, simulate);
+		return this.extractItem(null, slot, amount, simulate);
 	}
 
 	@Override
 	public int getSlotLimit(int slot) {
+		return this.getSlotLimit(null, slot);
+	}
+
+	// @Override
+	// protected int getStackLimit(int slot, ItemStack stack) {
+	// return this.getStackLimit(null, slot, stack);
+	// }
+
+	// Player aware versions (vanilla ender chest)
+	@Override
+	public void setSize(EntityPlayer player, int size) {}
+
+	@Override
+	public void setStackInSlot(EntityPlayer player, int slot, ItemStack stack) {
 		if (this.wrapper == null)
 			this.updateSizeUpgrades();
-		return wrapper.getSlotLimit(slot);
+		IItemHandlerModifiable handler = getEnderInventory(player);
+		if (handler != null)
+			handler.setStackInSlot(slot, getTrueInsert(stack));
+		else
+			wrapper.setStackInSlot(slot, getTrueInsert(stack));
 	}
+
+	@Override
+	public int getSlots(EntityPlayer player) {
+		if (this.wrapper == null)
+			this.updateSizeUpgrades();
+		IItemHandlerModifiable handler = getEnderInventory(player);
+		if (handler != null)
+			return handler.getSlots();
+		else
+			return wrapper.getSlots();
+	}
+
+	@Override
+	public ItemStack getStackInSlot(EntityPlayer player, int slot) {
+		if (this.wrapper == null)
+			this.updateSizeUpgrades();
+		IItemHandlerModifiable handler = getEnderInventory(player);
+		if (handler != null)
+			return handler.getStackInSlot(slot);
+		else
+			return wrapper.getStackInSlot(slot);
+	}
+
+	@Override
+	public ItemStack insertItem(EntityPlayer player, int slot, ItemStack stack, boolean simulate) {
+		if (this.wrapper == null)
+			this.updateSizeUpgrades();
+		IItemHandlerModifiable handler = getEnderInventory(player);
+		if (handler != null)
+			return handler.insertItem(slot, getTrueInsert(stack), simulate);
+		else
+			return wrapper.insertItem(slot, getTrueInsert(stack), simulate);
+	}
+
+	@Override
+	public ItemStack extractItem(EntityPlayer player, int slot, int amount, boolean simulate) {
+		if (this.wrapper == null)
+			this.updateSizeUpgrades();
+		IItemHandlerModifiable handler = getEnderInventory(player);
+		if (handler != null)
+			return handler.extractItem(slot, amount, simulate);
+		else
+			return wrapper.extractItem(slot, amount, simulate);
+	}
+
+	@Override
+	public int getSlotLimit(EntityPlayer player, int slot) {
+		if (this.wrapper == null)
+			this.updateSizeUpgrades();
+		IItemHandlerModifiable handler = getEnderInventory(player);
+		if (handler != null)
+			return handler.getSlotLimit(slot);
+		else
+			return wrapper.getSlotLimit(slot);
+	}
+
+	// @Override
+	// public int getStackLimit(EntityPlayer player, int slot, ItemStack stack)
+	// {
+	// if (this.wrapper == null)
+	// this.updateSizeUpgrades();
+	// return wrapper.getStackLimit(slot, stack);
+	// }
 
 	@Override
 	public void setEnderUpgrade(ItemStack enderUpgrade) {
@@ -134,9 +209,15 @@ public class BackpackHandler extends ItemStackHandler
 			this.enderUpgrade = enderUpgrade;
 	}
 
-	@Override
-	public ItemStack getEnderUpgrade() {
-		return this.enderUpgrade;
+//	@Override
+//	public ItemStack getEnderUpgrade() {
+//		return this.enderUpgrade;
+//	}
+
+	private IItemHandlerModifiable getEnderInventory(EntityPlayer player) {
+		if (enderUpgrade != null && enderUpgrade.getItem() instanceof ItemEnderUpgrade)
+			return ((ItemEnderUpgrade) enderUpgrade.getItem()).getEnderInventory(player, enderUpgrade);
+		return null;
 	}
 
 	private ItemStack getTrueInsert(ItemStack stack) {
@@ -171,6 +252,11 @@ public class BackpackHandler extends ItemStackHandler
 	}
 
 	// Upgrade methods
+	@Override
+	public ItemStackHandler getUpgradeHandler() {
+		return this.upgrades;
+	}
+
 	@Override
 	public void setUpgradeStackInSlot(int slot, ItemStack stack) {
 		ItemStack prevStack = getUpgradeStackInSlot(slot);
@@ -241,7 +327,8 @@ public class BackpackHandler extends ItemStackHandler
 		handlers[0] = this.contents;
 		for (int i = 0; i < this.sizeUpgrades.size(); i++)
 			handlers[i + 1] = this.sizeUpgrades.get(i);
-		System.out.println("constructing new wrapper with " + handlers.length + " handlers");
+		// System.out.println("constructing new wrapper with " + handlers.length
+		// + " handlers");
 		this.wrapper = new CombinedInvWrapper(handlers);
 	}
 
