@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
 import selim.modjam.packs.items.ItemCollectionUpgrade;
 import selim.modjam.packs.items.ItemEnderUpgrade;
+import selim.modjam.packs.items.ItemSmeltingUpgrade;
 import selim.modjam.packs.network.CapabilityContainerListenerManager;
 
 @Mod.EventBusSubscriber
@@ -21,7 +22,7 @@ public class CommonProxy {
 		// TODO: Figure out why this is the only nonworking backpack
 		// event.getRegistry().register(new ItemBackpack());
 		// TODO: Figure out why it isn't working on multiplayer
-		// event.getRegistry().register(new ItemSmeltingUpgrade());
+		event.getRegistry().register(new ItemSmeltingUpgrade());
 		event.getRegistry().register(new ItemCollectionUpgrade());
 		event.getRegistry().register(new ItemCapacityUpgrade());
 		event.getRegistry().register(new ItemEnderUpgrade());

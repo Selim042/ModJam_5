@@ -90,7 +90,7 @@ public class BackpackHandler extends ItemStackHandler
 	public void setStackInSlot(int slot, ItemStack stack) {
 		if (this.wrapper == null)
 			this.updateSizeUpgrades();
-		wrapper.setStackInSlot(slot, stack);
+		wrapper.setStackInSlot(slot, getTrueInsert(stack));
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class BackpackHandler extends ItemStackHandler
 	public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 		if (this.wrapper == null)
 			this.updateSizeUpgrades();
-		return wrapper.insertItem(slot, stack, simulate);
+		return wrapper.insertItem(slot, getTrueInsert(stack), simulate);
 	}
 
 	@Override
@@ -137,6 +137,20 @@ public class BackpackHandler extends ItemStackHandler
 	@Override
 	public ItemStack getEnderUpgrade() {
 		return this.enderUpgrade;
+	}
+
+	private ItemStack getTrueInsert(ItemStack stack) {
+		for (int s = 0; s < upgrades.getSlots(); s++) {
+			ItemStack upgrade = upgrades.getStackInSlot(s);
+			if (!(upgrade.getItem() instanceof IBackpackUpgrade))
+				continue;
+			ItemStack toInsert = ((IBackpackUpgrade) upgrade.getItem()).onItemAdd(this, stack);
+			if (upgrade.equals(toInsert))
+				continue;
+			if (toInsert != null)
+				return toInsert;
+		}
+		return stack;
 	}
 
 	// Internal inv
@@ -208,7 +222,7 @@ public class BackpackHandler extends ItemStackHandler
 		for (int s = 0; s < this.upgrades.getSlots(); s++) {
 			ItemStack stack = this.upgrades.getStackInSlot(s);
 			if (stack.getItem() instanceof IBackpackUpgrade)
-				((IBackpackUpgrade)stack.getItem()).onUpgradeAdded(this, stack);
+				((IBackpackUpgrade) stack.getItem()).onUpgradeAdded(this, stack);
 		}
 	}
 
