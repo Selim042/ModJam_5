@@ -1,0 +1,21 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		" s ",
+		"scs",
+		" s "
+	],
+	"key": {
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		},
+		"c": {
+			"type": "forge:ore_dict",
+			"ore": "chestWoodEnder"
+		}
+	},
+	"result": {
+		"item": "selimpacks:ender_upgrade"
+	}
+}
