@@ -32,7 +32,7 @@ Please search on the [issue track](../) before creating one.
 * Forge version:
 * Optifine?:
 * Minecraft version:
-* Related mov versions (if applicable):
+* Related mod versions (if applicable):
 
 ## Crashlog
 <!--- If you are reporting a crash, please include a link to your crashlog either from -->
