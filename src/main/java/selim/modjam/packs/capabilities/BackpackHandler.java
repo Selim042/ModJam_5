@@ -39,6 +39,14 @@ public class BackpackHandler extends ItemStackHandler
 		this.backpack = chestplate;
 	}
 
+	public BackpackHandler(ItemStack chestplate, int size) {
+		if (ModConfig.hasConfig(chestplate))
+			this.contents = new ItemStackHandler(ModConfig.getSize(chestplate));
+		else
+			this.contents = new ItemStackHandler(size);
+		this.initUpgrades();
+	}
+
 	private BackpackHandler(int size) {
 		this.contents = new ItemStackHandler(size);
 		this.initUpgrades();

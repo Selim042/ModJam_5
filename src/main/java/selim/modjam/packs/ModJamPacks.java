@@ -32,6 +32,7 @@ import selim.modjam.packs.capabilities.BackpackHandler;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.capabilities.IBackpackHandler;
 import selim.modjam.packs.compat.EnderStorageHelper;
+import selim.modjam.packs.gui.GuiHandler;
 import selim.modjam.packs.items.ItemBackpack;
 import selim.modjam.packs.network.MessageBulkUpdateContainerBackpack;
 import selim.modjam.packs.network.MessageOpenBackpack;
@@ -47,6 +48,8 @@ public class ModJamPacks {
 	public static final String NAME = "Selim Backpacks";
 	public static final String VERSION = "1.1.1";
 	public static final ResourceLocation CAPABILITY_ID = new ResourceLocation(MODID, "backpack");
+	@Mod.Instance(value = MODID)
+	public static ModJamPacks instance;
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 	public static SimpleNetworkWrapper network;
 	@SidedProxy(clientSide = "selim.modjam.packs.proxy.ClientProxy",
@@ -77,6 +80,7 @@ public class ModJamPacks {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
 		// Add all backpacks
 		NBTTagCompound innerNbt = new NBTTagCompound();

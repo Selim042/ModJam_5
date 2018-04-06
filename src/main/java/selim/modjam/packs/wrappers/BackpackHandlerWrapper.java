@@ -6,20 +6,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import selim.modjam.packs.ModJamPacks;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.capabilities.IBackpackHandler;
-import selim.modjam.packs.items.ItemEnderUpgrade;
 
 public class BackpackHandlerWrapper implements IInventory {
 
-	private final EntityPlayer player;
 	private final ItemStack stack;
 	private final IBackpackHandler handler;
 
-	public BackpackHandlerWrapper(EntityPlayer player, ItemStack stack) {
-		this.player = player;
+	public BackpackHandlerWrapper(ItemStack stack) {
 		this.stack = stack;
 		if (!stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
 			throw new IllegalArgumentException("ItemStack must have a backpack capability attached");
@@ -44,75 +40,35 @@ public class BackpackHandlerWrapper implements IInventory {
 
 	@Override
 	public int getSizeInventory() {
-//		ItemStack upgrade = handler.getEnderUpgrade();
-//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-//					.getEnderInventory(player, upgrade);
-//			return handler.getSlots();
-//		} else
-			return handler.getSlots();
+		return handler.getSlots();
 	}
 
 	@Override
 	public boolean isEmpty() {
-//		ItemStack upgrade = handler.getEnderUpgrade();
-//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-//					.getEnderInventory(player, upgrade);
-//			for (int s = 0; s < handler.getSlots(); s++)
-//				if (!handler.getStackInSlot(s).isEmpty())
-//					return false;
-//			return true;
-//		} else {
-			for (int s = 0; s < handler.getSlots(); s++)
-				if (!handler.getStackInSlot(s).isEmpty())
-					return false;
-			return true;
-//		}
+		for (int s = 0; s < handler.getSlots(); s++)
+			if (!handler.getStackInSlot(s).isEmpty())
+				return false;
+		return true;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-//		ItemStack upgrade = handler.getEnderUpgrade();
-//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-//					.getEnderInventory(player, upgrade);
-//			return handler.getStackInSlot(index);
-//		} else
-			return handler.getStackInSlot(index);
+		return handler.getStackInSlot(index);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-//		ItemStack upgrade = handler.getEnderUpgrade();
-//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-//					.getEnderInventory(player, upgrade);
-//			return handler.extractItem(index, count, false);
-//		} else
-			return handler.extractItem(index, count, false);
+		return handler.extractItem(index, count, false);
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-//		ItemStack upgrade = handler.getEnderUpgrade();
-//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-//					.getEnderInventory(player, upgrade);
-//			return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
-//		} else
-			return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+		return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-//		ItemStack upgrade = handler.getEnderUpgrade();
-//		if (upgrade != null && upgrade.getItem() instanceof ItemEnderUpgrade) {
-//			IItemHandlerModifiable handler = ((ItemEnderUpgrade) upgrade.getItem())
-//					.getEnderInventory(player, upgrade);
-//			handler.setStackInSlot(index, stack);
-//		} else
-			handler.setStackInSlot(index, stack);
+		handler.setStackInSlot(index, stack);
 	}
 
 	@Override
@@ -129,9 +85,7 @@ public class BackpackHandlerWrapper implements IInventory {
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {
-		// player.displayGUIChest(this);
-	}
+	public void openInventory(EntityPlayer player) {}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {}

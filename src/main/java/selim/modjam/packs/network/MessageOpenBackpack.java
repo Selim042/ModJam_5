@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -31,9 +32,13 @@ public class MessageOpenBackpack implements IMessage {
 			EntityPlayer player = ModJamPacks.proxy.getPlayer(ctx);
 			ItemStack stack = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
 			if (stack.isEmpty()
-					|| !stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
+					|| !stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)
+					|| !(player instanceof EntityPlayerMP))
 				return null;
-			player.displayGUIChest(new BackpackHandlerWrapper(player, stack));
+			EntityPlayerMP playerMP = (EntityPlayerMP) player;
+
+			playerMP.displayGUIChest(new BackpackHandlerWrapper(stack));
+			// playerMP.openGui(ModJamPacks.instance, 0, null, 0, 0, 0);
 			return null;
 		}
 
