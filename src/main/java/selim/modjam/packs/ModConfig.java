@@ -14,6 +14,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config.LangKey(ModJamPacks.MODID + ":config.title")
 public class ModConfig {
 
+	@Config.Comment({ "Should only set to true if requested to do so.", "This may spam your logs." })
+	public static boolean VERBOSE = false;
+
 	@Config.Comment("Default backpack size for any chestplate that doesn't have a defined size.")
 	public static int DEFAULT_SIZE = 18;
 

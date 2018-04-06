@@ -100,6 +100,9 @@ public class ModJamPacks {
 					new ResourceLocation(MODID, item.getRegistryName().getResourcePath() + "_backpack"),
 					new ResourceLocation(MODID, "backpack"), stack, Ingredient.fromItem(item),
 					CraftingHelper.getIngredient("chestWood"));
+			if (ModConfig.VERBOSE)
+				LOGGER.info("Adding recipe for backpack form of " + stack + "("
+						+ stack.getItem().getRegistryName() + ")");
 			BackpackTab.addBackpack(stack);
 		}
 
@@ -117,6 +120,9 @@ public class ModJamPacks {
 		if (stack == null || !(stack.getItem() instanceof ItemArmor)
 				|| ((ItemArmor) stack.getItem()).armorType != EntityEquipmentSlot.CHEST)
 			return;
+		if (ModConfig.VERBOSE)
+			LOGGER.info(
+					"Attaching capability to " + stack + "(" + stack.getItem().getRegistryName() + ")");
 		event.addCapability(CAPABILITY_ID, new BackpackHandler(stack));
 	}
 

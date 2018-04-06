@@ -43,12 +43,17 @@ public class ItemEnderUpgrade extends Item implements IBackpackUpgrade {
 		if (Loader.isModLoaded(EnderStorageHelper.ID) && stack.getSubCompound("freq") != null) {
 			NBTTagCompound freq = stack.getSubCompound("freq");
 			// TODO: Add color bound to (& owner)
+			// String owner = freq.getString("owner");
+			// if (owner != null && !owner.equals(""))
+			// tooltip.add("owner");
 		}
 	}
 
 	public IItemHandlerModifiable getEnderInventory(EntityPlayer player, ItemStack stack) {
 		if (Loader.isModLoaded(EnderStorageHelper.ID) && stack.getSubCompound("freq") != null)
 			return EnderStorageHelper.getInventory(stack.getSubCompound("freq"));
+		if (player == null)
+			return null;
 		return new InvWrapper(player.getInventoryEnderChest());
 	}
 
