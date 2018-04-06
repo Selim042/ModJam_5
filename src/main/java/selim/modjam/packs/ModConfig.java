@@ -30,6 +30,19 @@ public class ModConfig {
 		PACK_SIZES.put("minecraft:diamond_chesplate", 36);
 	}
 
+	public static boolean hasConfig(ItemStack stack) {
+		if (stack == null || stack.isEmpty())
+			return false;
+		return hasConfig(stack.getItem());
+	}
+
+	public static boolean hasConfig(Item item) {
+		if (item == null)
+			return false;
+		String id = item.getRegistryName().toString();
+		return PACK_SIZES.containsKey(id);
+	}
+
 	public static int getSize(ItemStack stack) {
 		if (stack == null || stack.isEmpty())
 			return 0;
@@ -39,7 +52,7 @@ public class ModConfig {
 	public static int getSize(Item item) {
 		if (DEFAULT_SIZE % 9 != 0)
 			DEFAULT_SIZE = 18;
-		if (item == null)
+		if (item == null || item.getRegistryName() == null)
 			return DEFAULT_SIZE;
 		String id = item.getRegistryName().toString();
 		if (!PACK_SIZES.containsKey(id))
