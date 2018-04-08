@@ -11,10 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -28,7 +30,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.oredict.OreDictionary;
 import selim.modjam.packs.capabilities.BackpackHandler;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
 import selim.modjam.packs.compat.EnderStorageHelper;
@@ -41,7 +42,8 @@ import selim.modjam.packs.network.MessageUpdateContainerBackpack;
 import selim.modjam.packs.proxy.CommonProxy;
 
 @Mod(modid = ModJamPacks.MODID, name = ModJamPacks.NAME, version = ModJamPacks.VERSION,
-		dependencies = "after:" + EnderStorageHelper.ID)
+		dependencies = "after:" + EnderStorageHelper.ID,
+		updateJSON = "http://myles-selim.us/modInfo/selimBackpacks.json")
 public class ModJamPacks {
 
 	public static final String MODID = "selimpacks";
@@ -111,6 +113,15 @@ public class ModJamPacks {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		if (ModConfig.VERBOSE) {
+			ForgeVersion.CheckResult result = ForgeVersion
+					.getResult(Loader.instance().activeModContainer());
+			ForgeVersion.Status status = result.status;
+			LOGGER.info(NAME + " is " + status);
+			if (status == ForgeVersion.Status.OUTDATED || status == ForgeVersion.Status.BETA_OUTDATED)
+				LOGGER.info("Please update to " + result.target + " before reporting any issues.");
+		}
+
 		proxy.postInit();
 	}
 
