@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -20,8 +20,9 @@ import selim.modjam.packs.items.IBackpackUpgrade;
 import selim.modjam.packs.items.ItemCapacityUpgrade;
 import selim.modjam.packs.items.ItemEnderUpgrade;
 
-public class BackpackHandler extends ItemStackHandler
-		implements IBackpackHandler, ICapabilitySerializable<NBTTagCompound> {
+public class BackpackHandler extends ItemStackHandler implements IBackpackHandler,
+		// ICapabilitySerializable<NBTTagCompound>
+		ICapabilityProvider {
 
 	private ItemStack backpack;
 	private final ItemStackHandler contents;
@@ -29,6 +30,16 @@ public class BackpackHandler extends ItemStackHandler
 	private final List<ItemStackHandler> sizeUpgrades = new LinkedList<ItemStackHandler>();
 	private ItemStack enderUpgrade;
 	private CombinedInvWrapper wrapper;
+
+	@Override
+	protected void onContentsChanged(int slot) {
+		super.onContentsChanged(slot);
+		NBTTagCompound nbt = backpack.getTagCompound();
+		if (nbt == null)
+			nbt = new NBTTagCompound();
+		nbt.setTag(ModJamPacks.MODID + ":backpack", serializeNBT());
+		backpack.setTagCompound(nbt);
+	}
 
 	protected BackpackHandler() {
 		this(ModConfig.DEFAULT_SIZE);
@@ -217,10 +228,10 @@ public class BackpackHandler extends ItemStackHandler
 			this.enderUpgrade = enderUpgrade;
 	}
 
-//	@Override
-//	public ItemStack getEnderUpgrade() {
-//		return this.enderUpgrade;
-//	}
+	// @Override
+	// public ItemStack getEnderUpgrade() {
+	// return this.enderUpgrade;
+	// }
 
 	private IItemHandlerModifiable getEnderInventory(EntityPlayer player) {
 		if (enderUpgrade != null && enderUpgrade.getItem() instanceof ItemEnderUpgrade)
@@ -335,8 +346,9 @@ public class BackpackHandler extends ItemStackHandler
 		handlers[0] = this.contents;
 		for (int i = 0; i < this.sizeUpgrades.size(); i++)
 			handlers[i + 1] = this.sizeUpgrades.get(i);
-		// System.out.println("constructing new wrapper with " + handlers.length
-		// + " handlers");
+		if (ModConfig.VERBOSE)
+			ModJamPacks.LOGGER
+					.info("Constructing new inventory wrapper with " + handlers.length + " handlers");
 		this.wrapper = new CombinedInvWrapper(handlers);
 	}
 

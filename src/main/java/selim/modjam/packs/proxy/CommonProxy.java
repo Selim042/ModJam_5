@@ -33,7 +33,7 @@ public class CommonProxy {
 	public void registerEventListeners() {
 		// MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(ItemCollectionUpgrade.class);
-		MinecraftForge.EVENT_BUS.register(CapabilityContainerListenerManager.class);
+//		MinecraftForge.EVENT_BUS.register(CapabilityContainerListenerManager.class);
 	}
 
 	public IThreadListener getThreadListener(final MessageContext context) {

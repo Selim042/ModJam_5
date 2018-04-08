@@ -13,10 +13,12 @@ import selim.modjam.packs.capabilities.IBackpackHandler;
 public class BackpackHandlerWrapper implements IInventory {
 
 	private final ItemStack stack;
+	private final EntityPlayer player;
 	private final IBackpackHandler handler;
 
-	public BackpackHandlerWrapper(ItemStack stack) {
+	public BackpackHandlerWrapper(ItemStack stack, EntityPlayer player) {
 		this.stack = stack;
+		this.player = player;
 		if (!stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
 			throw new IllegalArgumentException("ItemStack must have a backpack capability attached");
 		this.handler = stack.getCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null);
@@ -40,35 +42,35 @@ public class BackpackHandlerWrapper implements IInventory {
 
 	@Override
 	public int getSizeInventory() {
-		return handler.getSlots();
+		return handler.getSlots(player);
 	}
 
 	@Override
 	public boolean isEmpty() {
 		for (int s = 0; s < handler.getSlots(); s++)
-			if (!handler.getStackInSlot(s).isEmpty())
+			if (!handler.getStackInSlot(player, s).isEmpty())
 				return false;
 		return true;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		return handler.getStackInSlot(index);
+		return handler.getStackInSlot(player, index);
 	}
 
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		return handler.extractItem(index, count, false);
+		return handler.extractItem(player, index, count, false);
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return handler.extractItem(index, handler.getStackInSlot(index).getCount(), false);
+		return handler.extractItem(player, index, handler.getStackInSlot(index).getCount(), false);
 	}
 
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		handler.setStackInSlot(index, stack);
+		handler.setStackInSlot(player, index, stack);
 	}
 
 	@Override

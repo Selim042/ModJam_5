@@ -107,7 +107,7 @@ public class ClientProxy extends CommonProxy {
 				if (obj instanceof Item && !(obj instanceof ItemEnderUpgrade)) {
 					registerModel((Item) obj);
 				} else
-					System.out.println("Failed to register: " + f.getName());
+					ModJamPacks.LOGGER.error("Failed to register: " + f.getName());
 			}
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			ModJamPacks.LOGGER.error(

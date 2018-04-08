@@ -1,0 +1,27 @@
+{
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "enderstorage"
+		}
+	],
+	"type": "forge:ore_shaped",
+	"pattern": [
+		" s ",
+		"scs",
+		" s "
+	],
+	"key": {
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		},
+		"c": {
+			"item": "enderstorage:ender_storage",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "selimpacks:ender_upgrade"
+	}
+}

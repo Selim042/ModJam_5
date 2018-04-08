@@ -56,8 +56,8 @@ public class MessageUpdateContainerBackpack
 		@Override
 		protected void applyCapabilityData(final IBackpackHandler fluidHandlerItem,
 				final NBTTagCompound fluidTankInfo) {
-			if (fluidHandlerItem instanceof BackpackHandler)
-				((BackpackHandler) fluidHandlerItem).deserializeNBT(fluidTankInfo);
+			if (fluidHandlerItem instanceof BackpackHandler) {
+				((BackpackHandler) fluidHandlerItem).deserializeNBT(fluidTankInfo);}
 		}
 	}
 

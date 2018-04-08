@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
+import selim.modjam.packs.ModConfig;
 import selim.modjam.packs.ModJamPacks;
 
 /**
@@ -57,6 +58,12 @@ public abstract class CapabilityContainerListener<HANDLER> implements IContainer
 				containerToSend.windowId, syncableItemsList);
 		if (message.hasData()) { // Don't send the message if there's nothing to
 									// update
+			if (ModConfig.VERBOSE) {
+				String stackInfo = "";
+				for (ItemStack stack : itemsList)
+					stackInfo += stack + "(" + stack.getItem().getRegistryName() + ")";
+				ModJamPacks.LOGGER.info("Sending cap data for " + stackInfo);
+			}
 			ModJamPacks.network.sendTo(message, player);
 		}
 	}
@@ -75,6 +82,9 @@ public abstract class CapabilityContainerListener<HANDLER> implements IContainer
 				containerToSend.windowId, slotInd, handler);
 		if (message.hasData()) { // Don't send the message if there's nothing to
 									// update
+			if (ModConfig.VERBOSE)
+				ModJamPacks.LOGGER.info(
+						"Sending cap data for " + stack + "(" + stack.getItem().getRegistryName() + ")");
 			ModJamPacks.network.sendTo(message, player);
 		}
 	}

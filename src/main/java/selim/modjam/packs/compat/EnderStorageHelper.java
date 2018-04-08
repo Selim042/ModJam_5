@@ -53,4 +53,11 @@ public class EnderStorageHelper {
 				(EnderItemStorage) EnderStorageManager.instance(false).getStorage(freq, "item"));
 	}
 
+	public static String getFrequencyTooltip(NBTTagCompound freqNbt) {
+		Frequency freq = new Frequency(EnumColour.fromDyeMeta(freqNbt.getInteger("left")),
+				EnumColour.fromDyeMeta(freqNbt.getInteger("middle")),
+				EnumColour.fromDyeMeta(freqNbt.getInteger("right")), freqNbt.getString("owner"));
+		return freq.getTooltip();
+	}
+
 }

@@ -37,7 +37,12 @@ public class MessageOpenBackpack implements IMessage {
 				return null;
 			EntityPlayerMP playerMP = (EntityPlayerMP) player;
 
-			playerMP.displayGUIChest(new BackpackHandlerWrapper(stack));
+//			ModJamPacks.network.sendTo(
+//					new MessageUpdateContainerBackpack(playerMP.inventoryContainer.windowId,
+//							EntityEquipmentSlot.CHEST.getSlotIndex(), stack.getCapability(
+//									CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)),
+//					playerMP);
+			playerMP.displayGUIChest(new BackpackHandlerWrapper(stack, playerMP));
 			// playerMP.openGui(ModJamPacks.instance, 0, null, 0, 0, 0);
 			return null;
 		}

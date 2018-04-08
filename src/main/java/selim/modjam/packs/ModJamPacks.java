@@ -28,9 +28,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import selim.modjam.packs.capabilities.BackpackHandler;
 import selim.modjam.packs.capabilities.CapabilityBackpackHandler;
-import selim.modjam.packs.capabilities.IBackpackHandler;
 import selim.modjam.packs.compat.EnderStorageHelper;
 import selim.modjam.packs.gui.GuiHandler;
 import selim.modjam.packs.items.ItemBackpack;
@@ -46,7 +46,7 @@ public class ModJamPacks {
 
 	public static final String MODID = "selimpacks";
 	public static final String NAME = "Selim Backpacks";
-	public static final String VERSION = "1.1.1";
+	public static final String VERSION = "1.1.2";
 	public static final ResourceLocation CAPABILITY_ID = new ResourceLocation(MODID, "backpack");
 	@Mod.Instance(value = MODID)
 	public static ModJamPacks instance;
@@ -118,12 +118,20 @@ public class ModJamPacks {
 	public void stackCapAttach(AttachCapabilitiesEvent<ItemStack> event) {
 		ItemStack stack = event.getObject();
 		if (stack == null || !(stack.getItem() instanceof ItemArmor)
-				|| ((ItemArmor) stack.getItem()).armorType != EntityEquipmentSlot.CHEST)
+				|| ((ItemArmor) stack.getItem()).armorType != EntityEquipmentSlot.CHEST
+				|| stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null))
 			return;
 		if (ModConfig.VERBOSE)
 			LOGGER.info(
 					"Attaching capability to " + stack + "(" + stack.getItem().getRegistryName() + ")");
-		event.addCapability(CAPABILITY_ID, new BackpackHandler(stack));
+		BackpackHandler cap = new BackpackHandler(stack);
+		event.addCapability(CAPABILITY_ID, cap);
+		if (cap.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)) {
+			NBTTagCompound capNbt = stack.getSubCompound(ModJamPacks.MODID + ":backpack");
+			if (capNbt != null)
+				cap.deserializeNBT(capNbt);
+		}
+
 	}
 
 	// @SubscribeEvent
@@ -146,19 +154,16 @@ public class ModJamPacks {
 	public void onTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
 		// List<String> nbtList = new ArrayList<String>();
-		// NBTUtils.nbtToStringList(nbtList, stack.getTagCompound());
+		// NBTTagCompound capNbt =
+		// ReflectionHelper.getPrivateValue(ItemStack.class, stack, "capNBT");
+		// NBTUtils.nbtToStringList(nbtList, capNbt);
 		// event.getToolTip().addAll(nbtList);
 		if (stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)
 				|| (stack.getTagCompound() != null
-						&& stack.getTagCompound().getBoolean(MODID + ":backpack"))) {
-			IBackpackHandler backpack = stack
-					.getCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null);
+						&& stack.getTagCompound().getBoolean(MODID + ":backpack")))
 			event.getToolTip().add(I18n.format("misc." + MODID + ":backpack_tooltip"));
-		}
-		// if
-		// (stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY,
-		// null))
-		// event.getToolTip().add("has cap");
+		// for (int oreId : OreDictionary.getOreIDs(stack))
+		// event.getToolTip().add(" - " + OreDictionary.getOreName(oreId));
 	}
 
 }

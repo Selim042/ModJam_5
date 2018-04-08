@@ -2,12 +2,12 @@ package selim.modjam.packs.items;
 
 import java.util.List;
 
-import codechicken.lib.colour.EnumColour;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,10 +42,10 @@ public class ItemEnderUpgrade extends Item implements IBackpackUpgrade {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		if (Loader.isModLoaded(EnderStorageHelper.ID) && stack.getSubCompound("freq") != null) {
 			NBTTagCompound freq = stack.getSubCompound("freq");
-			// TODO: Add color bound to (& owner)
-			// String owner = freq.getString("owner");
-			// if (owner != null && !owner.equals(""))
-			// tooltip.add("owner");
+			String owner = freq.getString("owner");
+			if (owner != null && !owner.equals(""))
+				tooltip.add(owner);
+			tooltip.add(EnderStorageHelper.getFrequencyTooltip(freq));
 		}
 	}
 
@@ -93,6 +93,7 @@ public class ItemEnderUpgrade extends Item implements IBackpackUpgrade {
 		backpack.setEnderUpgrade(ItemStack.EMPTY);
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static class EnderUpgradeItemColor implements IItemColor {
 
 		@Override
@@ -101,20 +102,21 @@ public class ItemEnderUpgrade extends Item implements IBackpackUpgrade {
 			if (!Loader.isModLoaded(EnderStorageHelper.ID) || nbt == null)
 				return -1;
 			switch (tintIndex) {
-			case 0: // base texture
 			default:
+			case 0: // base texture
 				return -1;
 			case 1: // left
-				return EnumColour.fromDyeMeta(nbt.getInteger("left")).rgb();
+				return EnumDyeColor.byDyeDamage(nbt.getInteger("left")).getColorValue();
 			case 2: // middle
-				return EnumColour.fromDyeMeta(nbt.getInteger("middle")).rgb();
+				return EnumDyeColor.byDyeDamage(nbt.getInteger("middle")).getColorValue();
 			case 3: // right
-				return EnumColour.fromDyeMeta(nbt.getInteger("right")).rgb();
+				return EnumDyeColor.byDyeDamage(nbt.getInteger("right")).getColorValue();
 			}
 		}
 
 	}
 
+	@SideOnly(Side.CLIENT)
 	public static class EnderMeshDefinition implements ItemMeshDefinition {
 
 		@Override
