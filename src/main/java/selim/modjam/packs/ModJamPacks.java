@@ -47,7 +47,7 @@ import selim.modjam.packs.proxy.CommonProxy;
 public class ModJamPacks {
 
 	public static final String MODID = "selimpacks";
-	public static final String NAME = "Selim Backpacks";
+	public static final String NAME = "Selim's Backpacks";
 	public static final String VERSION = "1.1.2";
 	public static final ResourceLocation CAPABILITY_ID = new ResourceLocation(MODID, "backpack");
 	@Mod.Instance(value = MODID)
@@ -138,9 +138,12 @@ public class ModJamPacks {
 		BackpackHandler cap = new BackpackHandler(stack);
 		event.addCapability(CAPABILITY_ID, cap);
 		if (cap.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)) {
-			NBTTagCompound capNbt = stack.getSubCompound(ModJamPacks.MODID + ":backpack");
-			if (capNbt != null)
+			NBTTagCompound capNbt = stack.getSubCompound(ModJamPacks.MODID + ":backpack_data");
+			if (capNbt != null) {
+				if (ModConfig.VERBOSE)
+					ModJamPacks.LOGGER.info("Loading backpack NBT.");
 				cap.deserializeNBT(capNbt);
+			}
 		}
 
 	}
@@ -165,13 +168,12 @@ public class ModJamPacks {
 	public void onTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
 		// List<String> nbtList = new ArrayList<String>();
-		// NBTTagCompound capNbt =
-		// ReflectionHelper.getPrivateValue(ItemStack.class, stack, "capNBT");
+		// NBTTagCompound capNbt = stack.getTagCompound();
 		// NBTUtils.nbtToStringList(nbtList, capNbt);
 		// event.getToolTip().addAll(nbtList);
 		if (stack.hasCapability(CapabilityBackpackHandler.BACKPACK_HANDLER_CAPABILITY, null)
 				|| (stack.getTagCompound() != null
-						&& stack.getTagCompound().getBoolean(MODID + ":backpack")))
+						&& stack.getTagCompound().hasKey(ModJamPacks.MODID + ":backpack")))
 			event.getToolTip().add(I18n.format("misc." + MODID + ":backpack_tooltip"));
 		// for (int oreId : OreDictionary.getOreIDs(stack))
 		// event.getToolTip().add(" - " + OreDictionary.getOreName(oreId));

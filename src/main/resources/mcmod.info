@@ -1,7 +1,7 @@
 [
 {
   "modid": "selimpacks",
-  "name": "Selim Backpacks",
+  "name": "Selim's Backpacks",
   "description": "Adds the ability for any chestplate to work as a configurable & upgradeable backpack.",
   "version": "${version}",
   "mcversion": "${mcversion}",

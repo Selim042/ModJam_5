@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
  *
  * @author Choonster
  */
-@Mod.EventBusSubscriber
+//@Mod.EventBusSubscriber
 public class CapabilityContainerListenerManager {
 
 	/**
@@ -41,7 +41,7 @@ public class CapabilityContainerListenerManager {
 		containerListenerFactories.add(factory);
 	}
 
-	@Mod.EventBusSubscriber
+//	@Mod.EventBusSubscriber
 //	@SuppressWarnings("unused")
 	public static class EventHandler {
 

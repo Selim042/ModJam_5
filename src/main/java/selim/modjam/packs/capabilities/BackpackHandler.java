@@ -34,11 +34,18 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 	@Override
 	protected void onContentsChanged(int slot) {
 		super.onContentsChanged(slot);
+		saveCapability();
+	}
+
+	private void saveCapability() {
 		NBTTagCompound nbt = backpack.getTagCompound();
 		if (nbt == null)
 			nbt = new NBTTagCompound();
-		nbt.setTag(ModJamPacks.MODID + ":backpack", serializeNBT());
+		if (ModConfig.VERBOSE)
+			ModJamPacks.LOGGER.info("Saving backpack NBT.");
+		nbt.setTag(ModJamPacks.MODID + ":backpack_data", serializeNBT());
 		backpack.setTagCompound(nbt);
+		
 	}
 
 	protected BackpackHandler() {
@@ -71,7 +78,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		else {
 			NBTTagCompound nbt = this.backpack.getTagCompound();
 			if (nbt != null)
-				hasCap = nbt.getBoolean(ModJamPacks.MODID + ":backpack");
+				hasCap = nbt.hasKey(ModJamPacks.MODID + ":backpack");
 		}
 		if (hasCap)
 			return capability.equals(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
@@ -93,14 +100,15 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound upperNbt = super.serializeNBT();
+		upperNbt.setTag("contents", contents.serializeNBT());
 		upperNbt.setTag("upgrades", upgrades.serializeNBT());
 		return upperNbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		NBTTagCompound upgrades = nbt.getCompoundTag("upgrades");
-		this.upgrades.deserializeNBT(upgrades);
+		this.contents.deserializeNBT(nbt.getCompoundTag("contents"));
+		this.upgrades.deserializeNBT(nbt.getCompoundTag("upgrades"));
 		super.deserializeNBT(nbt);
 	}
 
@@ -157,6 +165,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 			handler.setStackInSlot(slot, getTrueInsert(stack));
 		else
 			wrapper.setStackInSlot(slot, getTrueInsert(stack));
+		this.onContentsChanged(slot);
 	}
 
 	@Override
@@ -186,10 +195,13 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		if (this.wrapper == null)
 			this.updateSizeUpgrades();
 		IItemHandlerModifiable handler = getEnderInventory(player);
+		ItemStack toReturn;
 		if (handler != null)
-			return handler.insertItem(slot, getTrueInsert(stack), simulate);
+			toReturn = handler.insertItem(slot, getTrueInsert(stack), simulate);
 		else
-			return wrapper.insertItem(slot, getTrueInsert(stack), simulate);
+			toReturn = wrapper.insertItem(slot, getTrueInsert(stack), simulate);
+		this.onContentsChanged(slot);
+		return toReturn;
 	}
 
 	@Override
@@ -197,10 +209,13 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		if (this.wrapper == null)
 			this.updateSizeUpgrades();
 		IItemHandlerModifiable handler = getEnderInventory(player);
+		ItemStack toReturn;
 		if (handler != null)
-			return handler.extractItem(slot, amount, simulate);
+			toReturn = handler.extractItem(slot, amount, simulate);
 		else
-			return wrapper.extractItem(slot, amount, simulate);
+			toReturn = wrapper.extractItem(slot, amount, simulate);
+		this.onContentsChanged(slot);
+		return toReturn;
 	}
 
 	@Override
@@ -285,6 +300,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		if (stack.getItem() instanceof IBackpackUpgrade)
 			((IBackpackUpgrade) stack.getItem()).onUpgradeAdded(this, stack);
 		this.updateSizeUpgrades();
+		saveCapability();
 	}
 
 	@Override
@@ -301,6 +317,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 	public ItemStack insertUpgradeItem(int slot, ItemStack stack, boolean simulate) {
 		ItemStack toReturn = this.upgrades.insertItem(slot, stack, simulate);
 		this.updateSizeUpgrades();
+		saveCapability();
 		return toReturn;
 	}
 
@@ -310,6 +327,7 @@ public class BackpackHandler extends ItemStackHandler implements IBackpackHandle
 		if (toReturn.getItem() instanceof IBackpackUpgrade)
 			((IBackpackUpgrade) toReturn.getItem()).onUpgradeRemoved(this, toReturn);
 		this.updateSizeUpgrades();
+		saveCapability();
 		return toReturn;
 	}
 

@@ -1,18 +1,17 @@
 package selim.modjam.packs.proxy;
 
-import java.lang.reflect.Field;
-
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -97,23 +96,30 @@ public class ClientProxy extends CommonProxy {
 
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {
-		Class<PacksItems> clazz = PacksItems.class;
-		Field[] fields = clazz.getDeclaredFields();
-		try {
-			for (Field f : fields) {
-				Object obj = f.get(null);
-				if (obj == null || obj == Items.AIR)
-					continue;
-				if (obj instanceof Item && !(obj instanceof ItemEnderUpgrade)) {
-					registerModel((Item) obj);
-				} else
-					ModJamPacks.LOGGER.error("Failed to register: " + f.getName());
+		// registerModel(PacksItems.BACKPACK);
+		registerModel(PacksItems.SMELTING_UPGRADE);
+		registerModel(PacksItems.COLLECTION_UPGRADE);
+		// registerModel(PacksItems.CAPACITY_UPGRADE);
+		registerModel(PacksItems.FILTERED_COLLECTION_UPGRADE);
+
+		ModelLoader.setCustomMeshDefinition(PacksItems.CAPACITY_UPGRADE, new ItemMeshDefinition() {
+
+			@Override
+			public ModelResourceLocation getModelLocation(ItemStack stack) {
+				NBTTagCompound nbt = stack.getTagCompound();
+				if (nbt == null || !nbt.getBoolean("3d"))
+					return new ModelResourceLocation(
+							new ResourceLocation(ModJamPacks.MODID, "capacity_upgrade"), "inventory");
+				return new ModelResourceLocation(
+						new ResourceLocation(ModJamPacks.MODID, "3_d_capacity_upgrade"), "inventory");
 			}
-		} catch (IllegalArgumentException | IllegalAccessException e) {
-			ModJamPacks.LOGGER.error(
-					"An " + e.getClass().getName() + " was thrown when attempting to load Item models.");
-			e.printStackTrace();
-		}
+
+		});
+		ModelLoader.registerItemVariants(PacksItems.CAPACITY_UPGRADE,
+				new ModelResourceLocation(new ResourceLocation(ModJamPacks.MODID, "capacity_upgrade"),
+						"inventory"),
+				new ModelResourceLocation(
+						new ResourceLocation(ModJamPacks.MODID, "3_d_capacity_upgrade"), "inventory"));
 
 		ModelLoader.setCustomMeshDefinition(PacksItems.ENDER_UPGRADE,
 				new ItemEnderUpgrade.EnderMeshDefinition());
